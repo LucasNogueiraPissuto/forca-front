@@ -1,0 +1,167 @@
+:host {
+  --color-dark-blue: #103a50;
+  --color-medium-blue: #5DADE2;
+  --color-red: #E74C3C;
+  --color-orange: #F39C12;
+  --color-green: #27AE60;
+  --color-light: #ECF0F1;
+  --color-gray: #95A5A6;
+  --color-dark-gray: #7F8C8D;
+}
+
+.game-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--color-dark-blue), var(--color-medium-blue));
+  color: var(--color-light);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: rgba(236, 240, 241, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.btn-voltar {
+  background-color: var(--color-orange);
+  color: var(--color-dark-blue);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-voltar:hover {
+  background-color: #e67e22;
+}
+
+.game-info {
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+.game-info p {
+  margin: 5px 0;
+}
+
+.attempts-left {
+  color: var(--color-orange);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.game-content {
+  text-align: center;
+  margin-bottom: 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.masked-word {
+  font-size: 2.5rem;
+  letter-spacing: 10px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  font-family: monospace;
+  text-transform: uppercase;
+  color: var(--color-light);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dicas-container {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: rgba(236, 240, 241, 0.1);
+  border-radius: 8px;
+  text-align: left;
+  backdrop-filter: blur(10px);
+}
+
+.dicas-container h3 {
+  margin-top: 0;
+  color: var(--color-light);
+  border-bottom: 1px solid var(--color-medium-blue);
+  padding-bottom: 5px;
+}
+
+.dicas-container ul {
+  padding-left: 20px;
+  margin-bottom: 0;
+  color: var(--color-light);
+}
+
+.dicas-container li {
+  margin-bottom: 5px;
+}
+
+.keyBoard {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: auto;
+  padding-bottom: 30px;
+}
+
+.loading-message, .error-message {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: var(--color-light);
+}
+
+.error-message a {
+  color: var(--color-orange);
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .game-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .game-info {
+    text-align: center;
+  }
+  
+  .masked-word {
+    font-size: 1.8rem;
+    letter-spacing: 6px;
+  }
+  
+  .dicas-container {
+    margin: 20px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-container {
+    padding: 10px;
+  }
+  
+  .masked-word {
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+  }
+  
+  .btn-voltar {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}

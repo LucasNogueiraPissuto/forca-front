@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-dark-blue: #103a50;
+  --color-medium-blue: #5DADE2;
+  --color-red: #E74C3C;
+  --color-orange: #F39C12;
+  --color-green: #27AE60;
+  --color-purple: #8E44AD;
+  --color-light: #ECF0F1;
+  --color-gray: #95A5A6;
+  --color-dark-gray: #7F8C8D;
+}
+
+/* Estilos básicos de reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

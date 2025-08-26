@@ -1,0 +1,59 @@
+<div class="selecao-container">
+  <!-- Grid Container -->
+  <div class="grid-container">
+    <!-- Cabeçalho -->
+    <div class="header-container">
+      <h2>Selecione um jogo para continuar</h2>
+    </div>
+
+    <!-- Botões no canto superior esquerdo -->
+    <div class="botoes-superiores">
+      <button class="btn-voltar-topo" (click)="voltarParaHome()">← Voltar para Início</button>
+      <button class="btn-novo-jogo-topo" (click)="iniciarNovoJogo()">+ Novo Jogo</button>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="conteudo-principal">
+      <div *ngIf="carregando" class="carregando">
+        <p>Carregando seus jogos...</p>
+      </div>
+      
+      <div *ngIf="!carregando && erro" class="erro">
+        <p>{{ erro }}</p>
+        <div class="botoes-container">
+          <button class="btn-voltar" (click)="voltarParaHome()">Voltar para o Início</button>
+        </div>
+      </div>
+      
+      <div *ngIf="!carregando && jogos.length === 0 && !erro" class="sem-jogos">
+        <p>Nenhum jogo encontrado para o email: <strong>{{ email }}</strong></p>
+        <div class="botoes-container">
+          <button class="btn-novo-jogo" (click)="iniciarNovoJogo()">Iniciar Novo Jogo</button>
+          <button class="btn-voltar" (click)="voltarParaHome()">Voltar para o Início</button>
+        </div>
+      </div>
+
+<div *ngIf="!carregando && jogos.length > 0" class="lista-jogos">
+  <div *ngFor="let jogo of jogos" class="jogo-card" (click)="selecionarJogo(jogo)">
+    <div class="jogo-header">
+      <span class="jogo-id">Jogo #{{ jogo.gameId }}</span>
+      <span class="jogo-status" 
+            [class.vitoria]="jogo.status === 'Vitória'" 
+            [class.derrota]="jogo.status === 'Derrota'" 
+            [class.andamento]="jogo.status !== 'Vitória' && jogo.status !== 'Derrota'">
+        {{ jogo.status || 'Em andamento' }}
+      </span>
+    </div>
+    
+    <div class="jogo-content">
+      <p class="palavra">{{ jogo.palavraMascarada }}</p>
+      <div class="jogo-stats">
+        <span>Tentativas: {{ jogo.palpites?.length || 0 }}</span>
+        <span>Erros: {{ jogo.maxErrors || 0 }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>

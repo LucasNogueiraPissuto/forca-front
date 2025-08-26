@@ -1,0 +1,25 @@
+<div class="email-dialog-container">
+  <h2 mat-dialog-title>Jogar com Email</h2>
+  <mat-dialog-content>
+    <div class="dialog-content-wrapper">
+      <p>Digite seu email para iniciar ou continuar jogos</p>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input 
+          matInput 
+          type="email" 
+          [(ngModel)]="email" 
+          placeholder="seu@email.com"
+          (keyup.enter)="onSubmit()"
+        >
+      </mat-form-field>
+      <p class="email-info">Se você já tem jogos em andamento, digite o mesmo email para continuar</p>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!email">
+      Iniciar Jogo
+    </button>
+  </mat-dialog-actions>
+</div>

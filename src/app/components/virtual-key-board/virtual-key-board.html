@@ -1,0 +1,10 @@
+<div class="teclado-container">
+  <button
+    *ngFor="let letra of letras"
+    (click)="onLetraClick(letra)"
+    [disabled]="isLetraDesabilitada(letra)"
+    [class.disabled]="isLetraDesabilitada(letra)"
+  >
+    {{ letra }}
+  </button>
+</div>

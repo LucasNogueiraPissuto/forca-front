@@ -1,0 +1,169 @@
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, var(--color-dark-blue), var(--color-medium-blue));
+  color: var(--color-light);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+  /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);*/
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.hero-section {
+  margin-bottom: 40px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);*/
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 500px;
+}
+
+.cta-section {
+  width: 100%;
+  max-width: 500px;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 25px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.cta-btn.primary {
+  background-color: var(--color-orange);
+  color: var(--color-dark-blue);
+}
+
+.cta-btn.secondary {
+  background-color: transparent;
+  color: var(--color-light);
+  border: 2px solid var(--color-orange);
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn.primary:hover {
+  background-color: #e67e22; /* Tom mais escuro do laranja */
+}
+
+.cta-btn.secondary:hover {
+  background-color: rgba(243, 156, 18, 0.1);
+}
+
+.email-input {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: var(--color-light);
+  color: var(--color-dark-blue);
+}
+
+.email-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.email-btn.primary {
+  background-color: var(--color-green);
+  color: white;
+}
+
+.email-btn.primary:hover {
+  background-color: #229954; /* Tom mais escuro do verde */
+}
+
+.email-btn.secondary {
+  background-color: var(--color-red);
+  color: white;
+}
+
+.email-btn.secondary:hover {
+  background-color: #cb4335; /* Tom mais escuro do vermelho */
+}
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .logo {
+    font-size: 2rem;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+  }
+  
+  .email-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .cta-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+}

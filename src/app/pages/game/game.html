@@ -1,0 +1,37 @@
+<div class="game-container" *ngIf="jogo && !carregando">
+  <div class="game-header">
+    <button class="btn-voltar" (click)="voltarParaSelecao()">← Voltar</button>
+    <div class="game-info">
+      <p>Jogo #{{ jogo.gameId }}</p>
+      <p *ngIf="emailDoJogador">Jogador: {{ emailDoJogador }}</p>
+      <p *ngIf="!emailDoJogador">Jogo rápido (sem email)</p>
+      <p>Tentativas restantes: <span class="attempts-left">{{ jogo.maxErrors }}</span></p>
+    </div>
+  </div>
+
+  <div class="game-content">
+    <p class="masked-word">{{ jogo.palavraMascarada }}</p>
+    
+    <div class="dicas-container" *ngIf="jogo.dicas && jogo.dicas.length > 0">
+      <h3>Dicas:</h3>
+      <ul>
+        <li *ngFor="let dica of jogo.dicas">{{ dica }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="keyBoard">
+    <app-virtual-key-board
+      [letrasTentadas]="jogo.palpites"
+      (letraClicada)="handleLetraDoTeclado($event)"
+    ></app-virtual-key-board>
+  </div>
+</div>
+
+<div *ngIf="carregando" class="loading-message">
+  Carregando jogo...
+</div>
+
+<div *ngIf="!jogo && !carregando" class="error-message">
+  Não foi possível carregar o jogo. <a (click)="voltarParaHome()">Voltar para o início</a>
+</div>

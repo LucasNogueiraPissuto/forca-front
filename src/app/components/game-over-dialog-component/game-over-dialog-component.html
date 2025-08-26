@@ -1,0 +1,10 @@
+    <h1 mat-dialog-title>{{ data.titulo }}</h1>
+    <div mat-dialog-content>
+      <p>{{ data.mensagem }}</p>
+      <p *ngIf="data.palavraCorreta" class="palavra-correta">
+        A palavra era: <strong>{{ data.palavraCorreta }}</strong>
+      </p>
+    </div>
+    <div mat-dialog-actions align="center">
+      <button mat-raised-button color="primary" (click)="onVoltarClick()">Voltar</button>
+    </div>
