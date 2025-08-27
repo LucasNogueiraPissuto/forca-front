@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Forca } from '../../services/forca';
+import { Forca } from '../../services/forca-service/forca';
 import { ForcaJogoResponse } from '../../interfaces/ForcaJogoReponse';
 import { EmailDialogComponent } from '../../components/emaildialog/emaildialog';
-import { EstadoJogoService } from '../../services/estado-jogo';
+import { EstadoJogoService } from '../../services/estado-jogo/estado-jogo';
 
 @Component({
   selector: 'app-home',

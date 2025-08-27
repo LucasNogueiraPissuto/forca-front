@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ForcaJogoResponse } from '../../interfaces/ForcaJogoReponse';
-import { Forca } from '../../services/forca';
+import { Forca } from '../../services/forca-service/forca';
 
 @Component({
   selector: 'app-selecao-jogos',

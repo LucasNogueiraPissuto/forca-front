@@ -2,11 +2,11 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VirtualKeyBoard } from '../../components/virtual-key-board/virtual-key-board';
 import { CommonModule } from '@angular/common';
-import { Forca } from '../../services/forca';
+import { Forca } from '../../services/forca-service/forca';
 import { ForcaJogoResponse } from '../../interfaces/ForcaJogoReponse';
 import { MatDialog } from '@angular/material/dialog';
 import { GameOverDialogComponent } from '../../components/game-over-dialog-component/game-over-dialog-component';
-import { EstadoJogoService } from '../../services/estado-jogo';
+import { EstadoJogoService } from '../../services/estado-jogo/estado-jogo';
 
 @Component({
   selector: 'app-game',
@@ -31,9 +31,11 @@ export class Game implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtém o ID da URL se existir
-    this.jogoIdDaUrl = this.activateRoute.snapshot.paramMap.get('id');
-    this.carregarJogo();
+    // Escuta mudanças no parâmetro 'id'
+    this.activateRoute.paramMap.subscribe(params => {
+      this.jogoIdDaUrl = this.activateRoute.snapshot.paramMap.get('id');
+      this.carregarJogo();
+    });
   }
 
   private carregarJogo(): void {
@@ -137,7 +139,9 @@ export class Game implements OnInit {
         mensagem: vitoria 
           ? 'Você descobriu a palavra corretamente!' 
           : 'Suas tentativas acabaram.',
-        palavraCorreta: this.jogo.palavraSecreta
+        palavraCorreta: this.jogo.palavraSecreta,
+        temEmail: !!this.emailDoJogador,
+        email: this.emailDoJogador || null 
       }
     });
 
