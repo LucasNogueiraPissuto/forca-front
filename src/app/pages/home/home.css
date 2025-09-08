@@ -4,8 +4,9 @@
   --color-deep-blue: #0a2638;
   --color-navy-blue: #152a38;
   --color-bright-blue: #6fb8e6;
+  --color-soft-blue: #3a7ca5;
   --color-red: #E74C3C;
-  --color-orange: #F39C12;
+  --color-orange: #e76e44;
   --color-green: #27AE60;
   --color-light: #ECF0F1;
   --color-gray: #95A5A6;
@@ -15,13 +16,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    135deg,
-    var(--color-deep-blue) 0%,
-    var(--color-navy-blue) 30%,
-    var(--color-dark-blue) 60%,
-    var(--color-medium-blue) 100%
-  );
+  background-image: url("../../../../wallpapersden.com_abstract-shapes-2021-minimalist_1921x1081.jpg");
   color: var(--color-light);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
@@ -36,22 +31,21 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(111, 184, 230, 0.15) 0%,
-      transparent 25%
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 30%
     ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(10, 38, 56, 0.2) 0%,
-      transparent 25%
+    linear-gradient(
+      135deg,
+      rgba(10, 38, 56, 0.08) 60%,
+      transparent 90%
     );
   pointer-events: none;
 }
 
-/* Restante do CSS permanece igual */
 .header {
-  padding: 20px;
+  padding: 40px 20px 20px 20px;
   display: flex;
   justify-content: center;
   position: relative;
@@ -62,6 +56,7 @@
   font-size: 2.5rem;
   font-weight: bold;
   margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .main-content {
@@ -77,12 +72,12 @@
 }
 
 .content-box {
-  background-color: rgba(236, 240, 241, 0.1);
+  background-color: rgba(236, 240, 241, 0.15);
   border-radius: 20px;
   padding: 40px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   width: 100%;
 }
@@ -94,6 +89,7 @@
 .hero-title {
   font-size: 3rem;
   margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .hero-subtitle {
