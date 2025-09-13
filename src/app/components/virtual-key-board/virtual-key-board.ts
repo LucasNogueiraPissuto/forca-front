@@ -33,8 +33,7 @@ export class VirtualKeyBoard {
   }
 
   isLetraDesabilitada(letra: string): boolean {
-    // Verifica tanto o input externo quanto o estado interno
-    return this.letrasTentadas.includes(letra) || 
-           this.letrasClicadas.includes(letra);
+    letra = letra.toLocaleLowerCase();
+    return this.letrasTentadas.includes(letra)
   }
 }
