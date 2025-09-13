@@ -212,4 +212,56 @@ export class Game implements OnInit {
   get currentUrl(): string {
     return window.location.href;
   }
+
+  // Adicionar este método no GameComponent
+// O método pedirDica() permanece o mesmo, mas vamos adicionar uma melhoria
+pedirDica(): void {
+  if (!this.jogo || !this.jogo.gameId) {
+    console.error('Erro: Jogo não carregado');
+    return;
+  }
+
+  // Verificar se o jogo ainda está em andamento
+  if (this.jogo.status !== 'Em andamento...') {
+    alert('O jogo já foi finalizado!');
+    return;
+  }
+
+  // Verificar se ainda há tentativas disponíveis
+  if (this.jogo.maxErrors <= 1) {
+    alert('Você não tem tentativas suficientes para pedir uma dica!');
+    return;
+  }
+
+  // Verificar se já foi usada uma dica
+  if (this.jogo.dicas && this.jogo.dicas.length > 0) {
+    alert('Você já usou sua dica neste jogo!');
+    return;
+  }
+
+  this.forcaService.pedirDica(this.jogo.gameId, this.emailDoJogador).subscribe({
+    next: (jogoAtualizado: ForcaJogoResponse) => {
+      this.jogo = jogoAtualizado;
+      console.log('Dica recebida:', jogoAtualizado.dicas);
+      
+      // Feedback visual
+      setTimeout(() => {
+        this.cdr.detectChanges();
+        // Scroll suave para a dica se necessário
+        const dicaElement = document.querySelector('.dicas-header');
+        if (dicaElement) {
+          dicaElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    },
+    error: (erro) => {
+      console.error('Erro ao pedir dica:', erro);
+      if (erro.status === 400 && erro.error && erro.error.message) {
+        alert(`Erro: ${erro.error.message}`);
+      } else {
+        alert('Não foi possível obter uma dica. Tente novamente.');
+      }
+    }
+  });
+}
 }

@@ -22,12 +22,20 @@
 .game-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 30px;
   padding: 15px;
   background-color: rgba(236, 240, 241, 0.1);
   border-radius: 8px;
   backdrop-filter: blur(10px);
+  gap: 15px;
+}
+
+/* Container dos botões no header */
+.game-header-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
 }
 
 .btn-voltar {
@@ -39,25 +47,91 @@
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s;
+  white-space: nowrap;
 }
 
 .btn-voltar:hover {
   background-color: #e67e22;
 }
 
+.btn-dica {
+  background-color: var(--color-medium-blue);
+  color: var(--color-light);
+  border: none;
+  padding: 7px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-dica:hover:not(:disabled) {
+  background-color: var(--color-dark-blue);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-dica:disabled {
+  background-color: var(--color-gray);
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
 .game-info {
   text-align: right;
   font-size: 0.9rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative; /* Adicionado para posicionamento absoluto do dicas-header */
+  min-height: 120px; /* Altura mínima para garantir espaço */
 }
 
 .game-info p {
-  margin: 5px 0;
+  margin: 2px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .attempts-left {
   color: var(--color-orange);
   font-weight: bold;
   font-size: 1.1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Estilos para a área de dicas no header */
+.dicas-header {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 15px;
+  background-color: rgba(243, 156, 18, 0.25);
+  border-radius: 8px;
+  border-left: 4px solid var(--color-orange);
+  text-align: center;
+  backdrop-filter: blur(5px);
+  z-index: 10;
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dica-label {
+  font-weight: bold;
+  color: var(--color-orange);
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+.dica-text {
+  color: var(--color-light);
+  font-style: italic;
+  font-size: 1rem;
 }
 
 .game-content {
@@ -80,30 +154,9 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Container de dicas antigo - manter escondido */
 .dicas-container {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: rgba(236, 240, 241, 0.1);
-  border-radius: 8px;
-  text-align: left;
-  backdrop-filter: blur(10px);
-}
-
-.dicas-container h3 {
-  margin-top: 0;
-  color: var(--color-light);
-  border-bottom: 1px solid var(--color-medium-blue);
-  padding-bottom: 5px;
-}
-
-.dicas-container ul {
-  padding-left: 20px;
-  margin-bottom: 0;
-  color: var(--color-light);
-}
-
-.dicas-container li {
-  margin-bottom: 5px;
+  display: none;
 }
 
 .keyBoard {
@@ -132,21 +185,26 @@
 @media (max-width: 768px) {
   .game-header {
     flex-direction: column;
-    gap: 15px;
-    text-align: center;
+    gap: 10px;
+  }
+  
+  .game-header-buttons {
+    width: 100%;
+    justify-content: space-between;
   }
   
   .game-info {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .dicas-header {
     text-align: center;
   }
   
   .masked-word {
     font-size: 1.8rem;
     letter-spacing: 6px;
-  }
-  
-  .dicas-container {
-    margin: 20px 10px;
   }
 }
 
@@ -160,8 +218,19 @@
     letter-spacing: 4px;
   }
   
-  .btn-voltar {
+  .btn-voltar,
+  .btn-dica {
     padding: 8px 12px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
+  
+  .dicas-header {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+}
+
+/* Remover estilos duplicados do container de dica antigo */
+.dica-container {
+  display: none;
 }

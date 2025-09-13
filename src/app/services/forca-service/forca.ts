@@ -42,4 +42,12 @@ getJogosPorEmail(email: string): Observable<ForcaJogoResponse[]> {
     })
   );
 }
+
+pedirDica(jogoId: number, email: string): Observable<ForcaJogoResponse> {
+  let params = new HttpParams();
+  if (email) {
+    params = params.set('email', email);
+  }
+  return this.http.get<ForcaJogoResponse>(`${this.baseUrl}/${jogoId}/dica`, { params });
+}
 }
