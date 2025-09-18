@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VirtualKeyBoard } from '../../components/virtual-key-board/virtual-key-board';
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,7 @@ export class Game implements OnInit {
   emailDoJogador: string = '';
   carregando: boolean = true;
   jogoIdDaUrl: string | null = null;
+  tecladoFisicoAtivo: boolean = true; 
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -36,6 +37,25 @@ export class Game implements OnInit {
       this.jogoIdDaUrl = this.activateRoute.snapshot.paramMap.get('id');
       this.carregarJogo();
     });
+  }
+
+    // Listener para teclado físico
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (!this.tecladoFisicoAtivo || !this.jogo || this.carregando) return;
+    
+    const letra = event.key.toUpperCase();
+    
+    // Verifica se é uma letra de A-Z
+    if (/^[A-Z]$/.test(letra)) {
+      event.preventDefault();
+      this.handleLetraDoTeclado(letra);
+    }
+    
+    // Tecla ESC para voltar
+    if (event.key === 'Escape') {
+      this.voltarParaSelecao();
+    }
   }
 
   private carregarJogo(): void {
@@ -158,7 +178,7 @@ export class Game implements OnInit {
   }
 
   handleLetraDoTeclado(letra: string): void {
-    console.log('Letra clicada recebida no GameComponent:', letra);
+    console.log('Letra recebida:', letra);
 
     if (!this.jogo || !this.jogo.gameId) {
       console.error('Erro: Jogo, ID do jogo ou email do jogador ausente.');
@@ -166,10 +186,16 @@ export class Game implements OnInit {
       return;
     }
 
+    // Desativa temporariamente o teclado físico durante a requisição
+    this.tecladoFisicoAtivo = false;
+
     this.forcaService.enviarPalpiteLetra(this.jogo.gameId, letra, this.emailDoJogador).subscribe({
       next: (jogoAtualizado: ForcaJogoResponse) => {
         this.jogo = {...jogoAtualizado, palpites: [...jogoAtualizado.palpites]};
         console.log('Estado do jogo atualizado após palpite:', this.jogo);
+        
+        // Reativa o teclado físico após processar a resposta
+        this.tecladoFisicoAtivo = true;
         
         // Usamos setTimeout para garantir que a detecção de mudanças aconteça após a atualização
         setTimeout(() => {
@@ -179,6 +205,7 @@ export class Game implements OnInit {
       },
       error: (erro) => {
         console.error('Erro ao enviar palpite:', erro);
+        this.tecladoFisicoAtivo = true; // Reativa o teclado físico em caso de erro
         
         // Se o jogo não for encontrado (possivelmente finalizado), redireciona
         if (erro.status === 404) {
@@ -195,6 +222,7 @@ export class Game implements OnInit {
       }
     });
   }
+
 
   // Método para voltar à seleção de jogos (se aplicável)
   voltarParaSelecao(): void {

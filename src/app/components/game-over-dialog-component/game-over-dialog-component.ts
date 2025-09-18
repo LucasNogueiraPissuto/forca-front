@@ -56,7 +56,7 @@ export class GameOverDialogComponent {
       console.log('Iniciando novo jogo como anônimo');
       this.forcaService.iniciarJogo().subscribe({
         next: (novoJogo) => {
-          this.router.navigate(['/game', novoJogo.gameId], {
+          this.router.navigate(['/game'], {
             state: { jogoCompleto: novoJogo }
           });
         },

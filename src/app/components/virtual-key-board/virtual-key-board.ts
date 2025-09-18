@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-virtual-key-board',
@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './virtual-key-board.html',
   styleUrl: './virtual-key-board.css'
 })
-export class VirtualKeyBoard {
+export class VirtualKeyBoard implements OnChanges {
   // Layout QWERTY dividido por linhas
   linhasTeclado: string[][] = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -18,6 +18,12 @@ export class VirtualKeyBoard {
   @Input() letrasTentadas: string[] = [];
   @Output() letraClicada = new EventEmitter<string>();
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['letrasTentadas']) {
+      console.log('Letras tentadas atualizadas:', this.letrasTentadas);
+    }
+  }
+
   onLetraClick(letra: string): void {
     if (!this.isLetraDesabilitada(letra)) {
       this.letraClicada.emit(letra);
@@ -26,6 +32,6 @@ export class VirtualKeyBoard {
 
   isLetraDesabilitada(letra: string): boolean {
     const tentadas = this.letrasTentadas || [];
-    return tentadas.map(l => l.toLowerCase()).includes(letra.toLowerCase());
+    return tentadas.map(l => l.toUpperCase()).includes(letra.toUpperCase());
   }
 }
