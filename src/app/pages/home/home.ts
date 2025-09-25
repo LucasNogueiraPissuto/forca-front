@@ -37,25 +37,25 @@ export class HomeComponent {
     });
   }
 
-abrirDialogoEmail(): void {
-  const dialogRef = this.dialog.open(EmailDialogComponent, {
-    width: '400px',
-    disableClose: false,
-    panelClass: 'email-dialog-container' // Adicione esta linha
-  });
+  abrirDialogoEmail(): void {
+    const dialogRef = this.dialog.open(EmailDialogComponent, {
+      width: '400px',
+      disableClose: false,
+      panelClass: 'email-dialog-container' // Adicione esta linha
+    });
 
-  dialogRef.afterClosed().subscribe((email: string) => {
-    if (email) {
-      this.jogarComEmail(email);
-    }
-  });
-}
+    dialogRef.afterClosed().subscribe((email: string) => {
+      if (email) {
+        this.jogarComEmail(email);
+      }
+    });
+  }
 
   private jogarComEmail(email: string): void {
     this.forcaService.getJogosPorEmail(email).subscribe({
       next: (jogos: ForcaJogoResponse[]) => {
         localStorage.setItem('forcaPlayerEmail', email);
-        
+
         if (jogos.length === 0) {
           this.iniciarNovoJogoComEmail(email);
         } else if (jogos.length === 1) {

@@ -8,7 +8,8 @@
 }
 
 .email-dialog-container {
-  overflow: hidden; /* Impede scroll bars no container principal */
+  overflow: hidden;
+  /* Impede scroll bars no container principal */
 }
 
 .full-width {
@@ -18,11 +19,13 @@
 
 mat-dialog-content {
   min-width: 300px;
-  max-width: 100%; /* Garante que não ultrapasse a largura disponível */
+  max-width: 100%;
+  /* Garante que não ultrapasse a largura disponível */
   color: var(--color-dark-blue);
   padding: 20px;
   margin: 0;
-  overflow: visible; /* Permite que o conteúdo seja visível sem scroll */
+  overflow: visible;
+  /* Permite que o conteúdo seja visível sem scroll */
 }
 
 mat-dialog-actions {
@@ -38,11 +41,13 @@ mat-dialog-actions {
   color: var(--color-dark-blue) !important;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  overflow: hidden; /* Remove scroll bars do container do dialog */
+  overflow: hidden;
+  /* Remove scroll bars do container do dialog */
 }
 
 ::ng-deep .email-dialog-container .mat-mdc-dialog-container {
-  overflow: hidden; /* Remove scroll bars do container do Angular Material */
+  overflow: hidden;
+  /* Remove scroll bars do container do Angular Material */
 }
 
 ::ng-deep .email-dialog-container .mat-mdc-dialog-title {
@@ -107,7 +112,8 @@ mat-dialog-actions {
 }
 
 ::ng-deep .email-dialog-container .mat-mdc-raised-button:not(:disabled):hover {
-  background-color: #e67e22 !important; /* Tom mais escuro do laranja */
+  background-color: #e67e22 !important;
+  /* Tom mais escuro do laranja */
 }
 
 /*::ng-deep .email-dialog-container .mat-mdc-button:hover {

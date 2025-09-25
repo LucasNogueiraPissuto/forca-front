@@ -16,7 +16,7 @@ export class GameOverDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
     private forcaService: Forca
-  ) {} 
+  ) { }
 
   ngOnInit() {
     console.log(this.data);
@@ -34,7 +34,7 @@ export class GameOverDialogComponent {
 
   onNovoJogoClick(): void {
     this.dialogRef.close();
-    
+
     if (this.data.temEmail) {
       this.forcaService.iniciarJogo(this.data.email).subscribe({
         next: (novoJogo) => {

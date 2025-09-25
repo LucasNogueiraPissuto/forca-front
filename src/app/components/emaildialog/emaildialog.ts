@@ -23,7 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 export class EmailDialogComponent {
   email: string = '';
 
-  constructor(public dialogRef: MatDialogRef<EmailDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<EmailDialogComponent>) { }
 
   onCancel(): void {
     this.dialogRef.close();

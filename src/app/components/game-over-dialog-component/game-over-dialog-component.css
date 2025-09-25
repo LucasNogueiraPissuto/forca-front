@@ -1,63 +1,68 @@
 :host {
-      --color-dark-blue: #103a50;
-      --color-medium-blue: #5DADE2;
-      --color-red: #E74C3C;
-      --color-orange: #F39C12;
-      --color-green: #27AE60;
-      --color-light: #ECF0F1;
-      --color-gray: #95A5A6;
-    }
-    
-    h1.dialog-title {
-      color: var(--color-light);
-      background-color: var(--color-orange);
-      padding: 18px 0;
-      margin: -32px -24px 24px -24px;
-      border-radius: 16px 16px 0 0;
-      font-size: 1rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    
-    .gameover-dialog-container {
-      background: white;
-      color: var(--color-light);
-      padding: 32px 24px 24px 24px;
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-      text-align: center;
-      min-width: 320px;
-    }
-    
-    .dialog-content {
-      font-size: 1.2em;
-      margin-bottom: 24px;
-    }
-    
-    .mensagem {
-      color: var(--color-dark-blue);
-      margin-bottom: 10px;
-    }
-    
+  --color-dark-blue: #103a50;
+  --color-medium-blue: #5DADE2;
+  --color-red: #E74C3C;
+  --color-orange: #F39C12;
+  --color-green: #27AE60;
+  --color-light: #ECF0F1;
+  --color-gray: #95A5A6;
+}
+
+h1.dialog-title {
+  color: var(--color-light);
+  background-color: var(--color-orange);
+  padding: 18px 0;
+  margin: -32px -24px 24px -24px;
+  border-radius: 16px 16px 0 0;
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.gameover-dialog-container {
+  background: white;
+  color: var(--color-light);
+  padding: 32px 24px 24px 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  min-width: 320px;
+}
+
+.dialog-content {
+  font-size: 1.2em;
+  margin-bottom: 24px;
+}
+
+.mensagem {
+  color: var(--color-dark-blue);
+  margin-bottom: 10px;
+}
+
 .dialog-actions {
   display: flex;
   justify-content: center;
-  gap: 32px; /* aumenta o espaço entre os botões */
+  gap: 32px;
+  /* aumenta o espaço entre os botões */
   margin-top: 10px;
 }
 
-.btn-voltar, .btn-novo-jogo {
+.btn-voltar,
+.btn-novo-jogo {
   background-color: var(--color-orange);
   color: var(--color-dark-blue);
   border: none;
-  padding: 8px 18px; /* diminui o tamanho dos botões */
+  padding: 8px 18px;
+  /* diminui o tamanho dos botões */
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.95rem; /* diminui a fonte */
+  font-size: 0.95rem;
+  /* diminui a fonte */
   font-weight: bold;
   transition: background-color 0.3s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  min-width: 90px; /* opcional: garante largura mínima */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-width: 90px;
+  /* opcional: garante largura mínima */
 }
 
 .btn-novo-jogo {
@@ -72,19 +77,22 @@
 .btn-novo-jogo:hover {
   background-color: #229954;
 }
-    
-    @media (max-width: 480px) {
-      .gameover-dialog-container {
-        padding: 18px 8px 12px 8px;
-        min-width: 220px;
-      }
-      .dialog-title {
-        font-size: 1.2rem;
-        padding: 12px 0;
-        margin-bottom: 16px;
-      }
-      .btn-voltar, .btn-novo-jogo {
-        padding: 8px 12px;
-        font-size: 1rem;
-      }
-    }
+
+@media (max-width: 480px) {
+  .gameover-dialog-container {
+    padding: 18px 8px 12px 8px;
+    min-width: 220px;
+  }
+
+  .dialog-title {
+    font-size: 1.2rem;
+    padding: 12px 0;
+    margin-bottom: 16px;
+  }
+
+  .btn-voltar,
+  .btn-novo-jogo {
+    padding: 8px 12px;
+    font-size: 1rem;
+  }
+}

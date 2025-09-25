@@ -5,13 +5,7 @@
       <p>Digite seu email para iniciar ou continuar jogos</p>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input 
-          matInput 
-          type="email" 
-          [(ngModel)]="email" 
-          placeholder="seu@email.com"
-          (keyup.enter)="onSubmit()"
-        >
+        <input matInput type="email" [(ngModel)]="email" placeholder="seu@email.com" (keyup.enter)="onSubmit()">
       </mat-form-field>
       <p class="email-info">Se você já tem jogos em andamento, digite o mesmo email para continuar</p>
     </div>

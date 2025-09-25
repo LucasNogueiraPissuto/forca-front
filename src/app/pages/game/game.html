@@ -3,11 +3,10 @@
     <!-- Container dos botões -->
     <div class="game-header-buttons">
       <button class="btn-voltar" (click)="voltarParaSelecao()">← Voltar</button>
-      
+
       <!-- Botão de Dica no header -->
-      <button class="btn-dica" (click)="pedirDica()" 
-              *ngIf="jogo.maxErrors > 1 && jogo.status === 'Em andamento...'"
-              [disabled]="jogo.dicas && jogo.dicas.length > 0">
+      <button class="btn-dica" (click)="pedirDica()" *ngIf="jogo.maxErrors > 1 && jogo.status === 'Em andamento...'"
+        [disabled]="jogo.dicas && jogo.dicas.length > 0">
         💡 Dica (-1)
       </button>
     </div>
@@ -17,7 +16,7 @@
       <p *ngIf="emailDoJogador">Jogador: {{ emailDoJogador }}</p>
       <p *ngIf="!emailDoJogador">Jogo rápido (sem email)</p>
       <p>Tentativas restantes: <span class="attempts-left">{{ jogo.maxErrors }}</span></p>
-      
+
       <!-- Área para mostrar dicas no header -->
       <div class="dicas-header" *ngIf="jogo.dicas && jogo.dicas.length > 0">
         <span class="dica-label">Dica:</span>
@@ -31,10 +30,8 @@
   </div>
 
   <div class="keyBoard">
-    <app-virtual-key-board
-      [letrasTentadas]="jogo.palpites"
-      (letraClicada)="handleLetraDoTeclado($event)"
-    ></app-virtual-key-board>
+    <app-virtual-key-board [letrasTentadas]="jogo.palpites"
+      (letraClicada)="handleLetraDoTeclado($event)"></app-virtual-key-board>
   </div>
 </div>
 

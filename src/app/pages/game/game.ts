@@ -20,7 +20,7 @@ export class Game implements OnInit {
   emailDoJogador: string = '';
   carregando: boolean = true;
   jogoIdDaUrl: string | null = null;
-  tecladoFisicoAtivo: boolean = true; 
+  tecladoFisicoAtivo: boolean = true;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -29,14 +29,14 @@ export class Game implements OnInit {
     private forcaService: Forca,
     public dialog: MatDialog,
     private estadoJogoService: EstadoJogoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Extrai email e ID da URL
     this.activateRoute.paramMap.subscribe(params => {
       this.emailDoJogador = params.get('email') || '';
       this.jogoIdDaUrl = params.get('id');
-      
+
       // Se o email for 'anonymous', tratar como anônimo
       if (this.emailDoJogador === 'anonymous') {
         this.emailDoJogador = '';
@@ -46,19 +46,19 @@ export class Game implements OnInit {
     });
   }
 
-    // Listener para teclado físico
+  // Listener para teclado físico
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (!this.tecladoFisicoAtivo || !this.jogo || this.carregando) return;
-    
+
     const letra = event.key.toUpperCase();
-    
+
     // Verifica se é uma letra de A-Z
     if (/^[A-Z]$/.test(letra)) {
       event.preventDefault();
       this.handleLetraDoTeclado(letra);
     }
-    
+
     // Tecla ESC para voltar
     if (event.key === 'Escape') {
       this.voltarParaSelecao();
@@ -67,7 +67,7 @@ export class Game implements OnInit {
 
   private carregarJogo(): void {
     const navigation = this.router.getCurrentNavigation();
-    
+
     if (navigation?.extras.state && navigation.extras.state['jogoCompleto']) {
       const respostaApiCompleta: ForcaJogoResponse = navigation.extras.state['jogoCompleto'];
       this.processarJogoCarregado(respostaApiCompleta);
@@ -104,9 +104,9 @@ export class Game implements OnInit {
   }
 
 
-    private carregarJogoSemEmail(): void {
+  private carregarJogoSemEmail(): void {
     const jogoDoServico = this.estadoJogoService.getJogo();
-    
+
     if (jogoDoServico) {
       this.processarJogoCarregado(jogoDoServico);
       this.estadoJogoService.clearJogo();
@@ -119,20 +119,20 @@ export class Game implements OnInit {
   private processarJogoCarregado(jogo: ForcaJogoResponse): void {
     this.jogo = jogo;
     this.emailDoJogador = jogo.email || '';
-    
+
     // Atualiza a URL se necessário (para jogos com email)
     if (this.jogoIdDaUrl === null && jogo.gameId && jogo.email) {
-      this.router.navigate(['/game', jogo.gameId], { 
+      this.router.navigate(['/game', jogo.gameId], {
         replaceUrl: true,
         state: { jogoCompleto: jogo }
       });
     }
-    
+
     console.log("Dados do jogo carregados:", this.jogo);
     console.log("Email do jogador:", this.emailDoJogador);
-    
+
     this.carregando = false;
-    
+
     setTimeout(() => {
       this.cdr.detectChanges();
       this.verificarFimDeJogo();
@@ -141,13 +141,13 @@ export class Game implements OnInit {
 
   private verificarFimDeJogo(): void {
     if (!this.jogo) return;
-    
+
     // Verificar se o jogo terminou com base na mensagem ou status
-    const jogoFinalizado = this.jogo.mensagem === 'Vitória' || 
-                          this.jogo.mensagem === 'Derrota' ||
-                          this.jogo.status === 'Vitória' || 
-                          this.jogo.status === 'Derrota';
-    
+    const jogoFinalizado = this.jogo.mensagem === 'Vitória' ||
+      this.jogo.mensagem === 'Derrota' ||
+      this.jogo.status === 'Vitória' ||
+      this.jogo.status === 'Derrota';
+
     if (jogoFinalizado) {
       // Pequeno delay para garantir que a view foi renderizada
       setTimeout(() => {
@@ -158,19 +158,19 @@ export class Game implements OnInit {
 
   private mostrarDialogoFimDeJogo(): void {
     if (!this.jogo) return;
-    
+
     const vitoria = this.jogo.mensagem === 'Vitória' || this.jogo.status === 'Vitória';
     const dialogRef = this.dialog.open(GameOverDialogComponent, {
       width: '400px',
       disableClose: true,
       data: {
         titulo: vitoria ? 'Parabéns! Você Venceu!' : 'Game Over!',
-        mensagem: vitoria 
-          ? 'Você descobriu a palavra corretamente!' 
+        mensagem: vitoria
+          ? 'Você descobriu a palavra corretamente!'
           : 'Suas tentativas acabaram.',
         palavraCorreta: this.jogo.palavraSecreta,
         temEmail: !!this.emailDoJogador,
-        email: this.emailDoJogador || null 
+        email: this.emailDoJogador || null
       }
     });
 
@@ -200,12 +200,12 @@ export class Game implements OnInit {
 
     this.forcaService.enviarPalpiteLetra(this.jogo.gameId, letra, this.emailDoJogador).subscribe({
       next: (jogoAtualizado: ForcaJogoResponse) => {
-        this.jogo = {...jogoAtualizado, palpites: [...jogoAtualizado.palpites]};
+        this.jogo = { ...jogoAtualizado, palpites: [...jogoAtualizado.palpites] };
         console.log('Estado do jogo atualizado após palpite:', this.jogo);
-        
+
         // Reativa o teclado físico após processar a resposta
         this.tecladoFisicoAtivo = true;
-        
+
         // Usamos setTimeout para garantir que a detecção de mudanças aconteça após a atualização
         setTimeout(() => {
           this.cdr.detectChanges();
@@ -215,14 +215,14 @@ export class Game implements OnInit {
       error: (erro) => {
         console.error('Erro ao enviar palpite:', erro);
         this.tecladoFisicoAtivo = true; // Reativa o teclado físico em caso de erro
-        
+
         // Se o jogo não for encontrado (possivelmente finalizado), redireciona
         if (erro.status === 404) {
           alert('Este jogo não foi encontrado. Iniciando um novo jogo.');
           this.limparERedirecionar();
           return;
         }
-        
+
         if (erro.status === 400 && erro.error && erro.error.message) {
           alert(`Erro no palpite: ${erro.error.message}`);
         } else {
@@ -251,54 +251,54 @@ export class Game implements OnInit {
   }
 
   // Adicionar este método no GameComponent
-// O método pedirDica() permanece o mesmo, mas vamos adicionar uma melhoria
-pedirDica(): void {
-  if (!this.jogo || !this.jogo.gameId) {
-    console.error('Erro: Jogo não carregado');
-    return;
-  }
-
-  // Verificar se o jogo ainda está em andamento
-  if (this.jogo.status !== 'Em andamento...') {
-    alert('O jogo já foi finalizado!');
-    return;
-  }
-
-  // Verificar se ainda há tentativas disponíveis
-  if (this.jogo.maxErrors <= 1) {
-    alert('Você não tem tentativas suficientes para pedir uma dica!');
-    return;
-  }
-
-  // Verificar se já foi usada uma dica
-  if (this.jogo.dicas && this.jogo.dicas.length > 0) {
-    alert('Você já usou sua dica neste jogo!');
-    return;
-  }
-
-  this.forcaService.pedirDica(this.jogo.gameId, this.emailDoJogador).subscribe({
-    next: (jogoAtualizado: ForcaJogoResponse) => {
-      this.jogo = jogoAtualizado;
-      console.log('Dica recebida:', jogoAtualizado.dicas);
-      
-      // Feedback visual
-      setTimeout(() => {
-        this.cdr.detectChanges();
-        // Scroll suave para a dica se necessário
-        const dicaElement = document.querySelector('.dicas-header');
-        if (dicaElement) {
-          dicaElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      });
-    },
-    error: (erro) => {
-      console.error('Erro ao pedir dica:', erro);
-      if (erro.status === 400 && erro.error && erro.error.message) {
-        alert(`Erro: ${erro.error.message}`);
-      } else {
-        alert('Não foi possível obter uma dica. Tente novamente.');
-      }
+  // O método pedirDica() permanece o mesmo, mas vamos adicionar uma melhoria
+  pedirDica(): void {
+    if (!this.jogo || !this.jogo.gameId) {
+      console.error('Erro: Jogo não carregado');
+      return;
     }
-  });
-}
+
+    // Verificar se o jogo ainda está em andamento
+    if (this.jogo.status !== 'Em andamento...') {
+      alert('O jogo já foi finalizado!');
+      return;
+    }
+
+    // Verificar se ainda há tentativas disponíveis
+    if (this.jogo.maxErrors <= 1) {
+      alert('Você não tem tentativas suficientes para pedir uma dica!');
+      return;
+    }
+
+    // Verificar se já foi usada uma dica
+    if (this.jogo.dicas && this.jogo.dicas.length > 0) {
+      alert('Você já usou sua dica neste jogo!');
+      return;
+    }
+
+    this.forcaService.pedirDica(this.jogo.gameId, this.emailDoJogador).subscribe({
+      next: (jogoAtualizado: ForcaJogoResponse) => {
+        this.jogo = jogoAtualizado;
+        console.log('Dica recebida:', jogoAtualizado.dicas);
+
+        // Feedback visual
+        setTimeout(() => {
+          this.cdr.detectChanges();
+          // Scroll suave para a dica se necessário
+          const dicaElement = document.querySelector('.dicas-header');
+          if (dicaElement) {
+            dicaElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+      },
+      error: (erro) => {
+        console.error('Erro ao pedir dica:', erro);
+        if (erro.status === 400 && erro.error && erro.error.message) {
+          alert(`Erro: ${erro.error.message}`);
+        } else {
+          alert('Não foi possível obter uma dica. Tente novamente.');
+        }
+      }
+    });
+  }
 }

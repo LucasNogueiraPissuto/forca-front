@@ -15,7 +15,7 @@ export class SelecaoJogosComponent implements OnInit {
   jogos: ForcaJogoResponse[] = [];
   email: string = '';
   carregando: boolean = true;
-    erro: string = '';
+  erro: string = '';
 
   constructor(
     private forcaService: Forca,
@@ -26,7 +26,7 @@ export class SelecaoJogosComponent implements OnInit {
   ngOnInit(): void {
     console.log('SelecaoJogosComponent inicializado');
     this.email = localStorage.getItem('forcaPlayerEmail') || '';
-    
+
     if (!this.email) {
       console.log('Nenhum email encontrado, redirecionando para home');
       this.router.navigate(['/']);
@@ -41,25 +41,25 @@ export class SelecaoJogosComponent implements OnInit {
       next: (jogos) => {
         this.jogos = jogos;
         this.carregando = false;
-        
+
         if (jogos.length === 0) {
           // Email existe mas não tem jogos - mostra mensagem apropriada
           this.erro = 'Nenhum jogo encontrado para este email.';
         }
-        
+
         this.cdr.detectChanges();
       },
       error: (erro) => {
         console.error('Erro ao carregar jogos:', erro);
         this.carregando = false;
-        
+
         if (erro.status === 404 || erro.status === 400) {
           // Email não encontrado no sistema
           this.erro = 'Email não encontrado. Por favor, verifique o email digitado.';
         } else {
           this.erro = 'Não foi possível carregar seus jogos. Tente novamente.';
         }
-        
+
         this.cdr.detectChanges();
       }
     });
@@ -67,8 +67,8 @@ export class SelecaoJogosComponent implements OnInit {
 
   selecionarJogo(jogo: ForcaJogoResponse): void {
     // Navega para a URL com email e id
-    this.router.navigate(['/game', this.email, jogo.gameId], { 
-      state: { jogoCompleto: jogo } 
+    this.router.navigate(['/game', this.email, jogo.gameId], {
+      state: { jogoCompleto: jogo }
     });
   }
 
@@ -76,8 +76,8 @@ export class SelecaoJogosComponent implements OnInit {
     this.forcaService.iniciarJogo(this.email).subscribe({
       next: (novoJogo) => {
         // Navega para a URL dinâmica com o ID do novo jogo
-        this.router.navigate(['/game', novoJogo.gameId], { 
-          state: { jogoCompleto: novoJogo } 
+        this.router.navigate(['/game', novoJogo.gameId], {
+          state: { jogoCompleto: novoJogo }
         });
       },
       error: (erro) => {
