@@ -25,38 +25,34 @@ export class GameOverDialogComponent {
   onVoltarClick(): void {
     this.dialogRef.close();
 
-    // Verifica se há email para decidir o redirecionamento
     if (this.data.temEmail) {
-      // Jogo com email: redireciona para a tela de seleção de jogos
       this.router.navigate(['/selecao-jogos']);
     } else {
-      // Jogo sem email: redireciona para a tela inicial
       this.router.navigate(['/']);
     }
   }
 
   onNovoJogoClick(): void {
     this.dialogRef.close();
-    console.log('Email do jogador:', this.data.email);
-    console.log('Tem email:', this.data.temEmail);
+    
     if (this.data.temEmail) {
-    console.log('Iniciando novo jogo para o email:', this.data.email);
-    this.forcaService.iniciarJogo(this.data.email).subscribe({
-      next: (novoJogo) => {
-        this.router.navigate(['/game', novoJogo.gameId], {
-          state: { jogoCompleto: novoJogo }
-        });
-      },
-      error: (erro) => {
-        console.error('Erro ao iniciar novo jogo:', erro);
-        alert('Não foi possível iniciar um novo jogo. Tente novamente.');
-      }
-    });
+      this.forcaService.iniciarJogo(this.data.email).subscribe({
+        next: (novoJogo) => {
+          // Navegar para rota com email e id
+          this.router.navigate(['/game', this.data.email, novoJogo.gameId], {
+            state: { jogoCompleto: novoJogo }
+          });
+        },
+        error: (erro) => {
+          console.error('Erro ao iniciar novo jogo:', erro);
+          alert('Não foi possível iniciar um novo jogo. Tente novamente.');
+        }
+      });
     } else {
-      console.log('Iniciando novo jogo como anônimo');
       this.forcaService.iniciarJogo().subscribe({
         next: (novoJogo) => {
-          this.router.navigate(['/game'], {
+          // Navegar para rota anônima
+          this.router.navigate(['/game', 'anonymous', novoJogo.gameId], {
             state: { jogoCompleto: novoJogo }
           });
         },

@@ -66,8 +66,8 @@ export class SelecaoJogosComponent implements OnInit {
   }
 
   selecionarJogo(jogo: ForcaJogoResponse): void {
-    // Navega para a URL dinâmica com o ID do jogo selecionado
-    this.router.navigate(['/game', jogo.gameId], { 
+    // Navega para a URL com email e id
+    this.router.navigate(['/game', this.email, jogo.gameId], { 
       state: { jogoCompleto: jogo } 
     });
   }
@@ -90,8 +90,9 @@ export class SelecaoJogosComponent implements OnInit {
   iniciarNovoJogo(): void {
     this.forcaService.iniciarJogo(this.email).subscribe({
       next: (novoJogo) => {
-        this.router.navigate(['/game', novoJogo.gameId], { 
-          state: { jogoCompleto: novoJogo } 
+        // Navegar para rota com email e id
+        this.router.navigate(['/game', this.email, novoJogo.gameId], {
+          state: { jogoCompleto: novoJogo }
         });
       },
       error: (erro) => {

@@ -26,7 +26,9 @@ export class HomeComponent {
     this.forcaService.iniciarJogo().subscribe({
       next: (respostaCompleta: ForcaJogoResponse) => {
         this.estadoJogoService.setJogo(respostaCompleta);
-        this.router.navigate(['/game']);
+        this.router.navigate(['/game', 'anonymous', respostaCompleta.gameId], {
+          state: { jogoCompleto: respostaCompleta }
+        });
       },
       error: (erro) => {
         console.error('Erro ao iniciar jogo:', erro);
@@ -57,7 +59,7 @@ abrirDialogoEmail(): void {
         if (jogos.length === 0) {
           this.iniciarNovoJogoComEmail(email);
         } else if (jogos.length === 1) {
-          this.router.navigate(['/game', jogos[0].gameId], {
+          this.router.navigate(['/game', email, jogos[0].gameId], {
             state: { jogoCompleto: jogos[0] }
           });
         } else {
@@ -74,7 +76,7 @@ abrirDialogoEmail(): void {
   private iniciarNovoJogoComEmail(email: string): void {
     this.forcaService.iniciarJogo(email).subscribe({
       next: (respostaCompleta: ForcaJogoResponse) => {
-        this.router.navigate(['/game', respostaCompleta.gameId], {
+        this.router.navigate(['/game', email, respostaCompleta.gameId], {
           state: { jogoCompleto: respostaCompleta }
         });
       },

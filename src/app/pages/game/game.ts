@@ -32,9 +32,16 @@ export class Game implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Escuta mudanças no parâmetro 'id'
+    // Extrai email e ID da URL
     this.activateRoute.paramMap.subscribe(params => {
-      this.jogoIdDaUrl = this.activateRoute.snapshot.paramMap.get('id');
+      this.emailDoJogador = params.get('email') || '';
+      this.jogoIdDaUrl = params.get('id');
+      
+      // Se o email for 'anonymous', tratar como anônimo
+      if (this.emailDoJogador === 'anonymous') {
+        this.emailDoJogador = '';
+      }
+
       this.carregarJogo();
     });
   }
@@ -62,25 +69,19 @@ export class Game implements OnInit {
     const navigation = this.router.getCurrentNavigation();
     
     if (navigation?.extras.state && navigation.extras.state['jogoCompleto']) {
-      // Jogo recebido via navegação
       const respostaApiCompleta: ForcaJogoResponse = navigation.extras.state['jogoCompleto'];
       this.processarJogoCarregado(respostaApiCompleta);
     } else if (this.jogoIdDaUrl) {
-      // Jogo com URL dinâmica - carrega do backend
       this.carregarJogoPorId(this.jogoIdDaUrl);
     } else {
-      // Jogo sem email - tenta carregar do serviço
       this.carregarJogoSemEmail();
     }
   }
 
-    private carregarJogoPorId(jogoId: string): void {
-    const emailSalvo = localStorage.getItem('forcaPlayerEmail');
-    
-    if (emailSalvo) {
-      this.emailDoJogador = emailSalvo;
-      
-      this.forcaService.getJogoById(jogoId, emailSalvo).subscribe({
+  private carregarJogoPorId(jogoId: string): void {
+    // Agora temos o emailDoJogador da rota
+    if (this.emailDoJogador) {
+      this.forcaService.getJogoById(jogoId, this.emailDoJogador).subscribe({
         next: (jogoCarregado: ForcaJogoResponse) => {
           this.processarJogoCarregado(jogoCarregado);
         },
@@ -90,10 +91,18 @@ export class Game implements OnInit {
         }
       });
     } else {
-      // Se não tem email salvo, redireciona para home
-      this.router.navigate(['/']);
+      // Jogo anônimo - carregar do estado ou redirecionar
+      const jogoDoServico = this.estadoJogoService.getJogo();
+      if (jogoDoServico && jogoDoServico.gameId === parseInt(jogoId)) {
+        this.processarJogoCarregado(jogoDoServico);
+        this.estadoJogoService.clearJogo();
+      } else {
+        // Se não tem jogo no serviço, redireciona
+        this.router.navigate(['/']);
+      }
     }
   }
+
 
     private carregarJogoSemEmail(): void {
     const jogoDoServico = this.estadoJogoService.getJogo();

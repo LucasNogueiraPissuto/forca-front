@@ -10,11 +10,11 @@ export const routes: Routes = [
         component: HomeComponent
     },
     {
-        path:"game",
+        path: "game/anonymous/:id",
         component: Game
     },
-        {
-        path:"game/:id",
+    {
+        path: "game/:email/:id",
         component: Game
     },
     {
